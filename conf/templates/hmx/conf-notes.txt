@@ -1,0 +1,4 @@
+Alkit configuration 
+
+Machine compatible
+    imx8mp-var-dart-hmx1
