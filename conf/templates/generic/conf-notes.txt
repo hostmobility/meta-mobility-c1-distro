@@ -1,2 +1,4 @@
-Alkit MX4 configuration
+MX4 configuration
 
+Machine compatible
+    mx4-t30

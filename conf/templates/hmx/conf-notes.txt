@@ -1,4 +1,5 @@
-Alkit configuration 
+configuration for host monitor x
+Add /mnt/config partition on emmc
 
 Machine compatible
     imx8mp-var-dart-hmx1
