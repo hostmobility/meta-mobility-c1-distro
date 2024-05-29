@@ -30,6 +30,6 @@ BBLAYERS = " \
   \
   ${BSPDIR}/sources/meta-hostmobility-bsp \
   ${BSPDIR}/sources/meta-mobility-poky-distro \
-  ${BSPDIR}/sources/meta-alkit-hm-wice \
+  ${BSPDIR}/sources/meta-mobility-c1-distro  \
 "
 
