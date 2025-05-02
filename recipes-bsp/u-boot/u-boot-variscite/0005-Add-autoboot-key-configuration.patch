@@ -1,0 +1,25 @@
+From 4381955a54614ab0aeb5f9bb81cab7306eeaf6ef Mon Sep 17 00:00:00 2001
+From: Andreas Ternstedt <a.ternstedt@setek.se>
+Date: Fri, 2 May 2025 11:34:13 +0000
+Subject: [PATCH 5/5] Add autoboot key configuration
+
+---
+ configs/imx8mp_var_dart_defconfig | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/configs/imx8mp_var_dart_defconfig b/configs/imx8mp_var_dart_defconfig
+index 83e24c254bc..c682fb952b4 100644
+--- a/configs/imx8mp_var_dart_defconfig
++++ b/configs/imx8mp_var_dart_defconfig
+@@ -35,6 +35,8 @@ CONFIG_LEGACY_IMAGE_FORMAT=y
+ CONFIG_OF_BOARD_SETUP=y
+ CONFIG_OF_SYSTEM_SETUP=y
+ CONFIG_BOOTDELAY=0
++CONFIG_AUTOBOOT_KEYED=y
++CONFIG_AUTOBOOT_STOP_STR=""
+ CONFIG_BOOTCOMMAND="run bsp_bootcmd"
+ CONFIG_DEFAULT_FDT_FILE="imx8mp-var-dart-dt8mcustomboard.dtb"
+ CONFIG_BOARD_EARLY_INIT_F=y
+-- 
+2.34.1
+
