@@ -64,7 +64,7 @@ IMAGE_INSTALL:append:imx8mp-var-dart = " \
     ethtool \
 "
 
-BBMASK = "meta-variscite-imx/recipes-core/systemd/systemd_%.bbappend"
+BBMASK += "meta-variscite-imx/recipes-core/systemd/systemd_%.bbappend"
 
 IMAGE_DEV_MANAGER   = "udev"
 IMAGE_INIT_MANAGER  = "systemd"
