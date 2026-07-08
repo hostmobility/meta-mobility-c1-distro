@@ -40,6 +40,13 @@ DISTRO_FEED_ARCHS += "all ${PACKAGE_EXTRA_ARCHS} ${MACHINE_ARCH}"
 
 ERROR_QA:remove = "version-going-backwards"
 
+# Pin the rootfs ext4 feature set: build WITHOUT the e2fsprogs-1.47 defaults
+# orphan_file and metadata_csum_seed (defense-in-depth, matches Kirkstone's
+# on-disk format). Primary corruption fix is mb_optimize_scan=0 in the hmx
+# fstab. Uses a custom wks (meta-hostmobility-bsp/wic/) since wic ignores
+# EXTRA_IMAGECMD for its internal mkfs.ext4.
+WKS_FILE:imx8mp-var-dart-hmx1 = "hmx-imx-boot-singlepart.wks.in"
+
 DL_DIR ?= "${BSPDIR}/downloads/"
 # meta-imx scarthgap append targets OpenSSL 3.2, but this build uses OpenSSL 3.5.
 BBMASK += ".*/meta-imx.*/recipes-connectivity/openssl/openssl_3\.2\..*\.bbappend"
