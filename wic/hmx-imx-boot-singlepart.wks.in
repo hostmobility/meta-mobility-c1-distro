@@ -1,0 +1,11 @@
+# Copy of Variscite's imx-imx-boot-singlepart.wks.in, but the rootfs is
+# created WITHOUT the e2fsprogs-1.47 default features orphan_file and
+# metadata_csum_seed, matching the known-good Kirkstone on-disk format.
+#
+# -F -i 8192 preserves wic's default mkfs.ext4 behaviour; the -O clause just
+# turns the two suspect features off.
+
+part u-boot --source rawcopy --sourceparams="file=imx-boot" --ondisk mmcblk --no-table --align ${IMX_BOOT_SEEK}
+part / --source rootfs --ondisk mmcblk --fstype=ext4 --label root --align 8192 --mkfs-extraopts="-F -i 8192 -O ^orphan_file,^metadata_csum_seed"
+
+bootloader --ptable msdos
