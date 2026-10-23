@@ -1,10 +1,34 @@
 MACHINE ??= 'imx8mp-var-dart-hmx1'
-TARGET_ARCH ?= "arm"
-DISTRO ?= 'fslc-xwayland'
 IMX_DEFAULT_BSP = "mainline"
+DISTRO_NAME = "mobility-c1 (Setek Production Distro)"
+DISTRO_VERSION = "5.0"
+DISTRO_CODENAME = "scarthgap"
+TCLIBCAPPEND = ""
+
+INIT_MANAGER = "systemd"
+
+# Complete feature list, init-manager-systemd.inc adds systemd and usrmerge.
+# Headless, no wifi, bluetooth or NFC, modem handled by wvdial/pppd (not ofono).
+DISTRO_FEATURES = "\
+    xattr pam seccomp \
+    ipv4 ipv6 zeroconf \
+    usbhost usbgadget pci \
+    ext2 vfat \
+"
+
+# What poky.conf provided that is worth keeping
+require conf/distro/include/security_flags.inc
+require conf/distro/include/no-static-libs.inc
+require conf/distro/include/yocto-uninative.inc
+INHERIT += "uninative"
+BB_SIGNATURE_HANDLER = "OEEquivHash"
+BB_HASHSERVE ??= "auto"
+
 PACKAGE_CLASSES ?= 'package_ipk'
 EXTRA_IMAGE_FEATURES ?= "debug-tweaks package-management"
 USER_CLASSES = "buildstats"
+INHERIT += "rm_work deploy_mobility buildhistory"
+BUILDHISTORY_COMMIT ?= "1"
 PATCHRESOLVE = "noop"
 BB_DISKMON_DIRS ??= "\
     STOPTASKS,${TMPDIR},1G,100K \
@@ -16,37 +40,25 @@ BB_DISKMON_DIRS ??= "\
     HALT,${SSTATE_DIR},100M,1K \
     HALT,/tmp,10M,1K"
 
-PACKAGECONFIG:append:pn-qemu-system-native = " sdl"
-PACKAGECONFIG:append:pn-nativesdk-qemu = " sdl"
+# sensord (disabled by its preset) pulls in rrdtool with cairo, pango and fonts
+PACKAGECONFIG:remove:pn-lmsensors = "sensord"
+
+# opkg-utils' python scripts (opkg-make-index, opkg-show-deps, ...) build
+# feeds on a host, opkg does not need them. Keeps python3 out of the image.
+PACKAGECONFIG:remove:pn-opkg-utils = "python"
 
 CONF_VERSION = "2"
 ACCEPT_FSL_EULA = "1"
 
-INHERIT += "rm_work deploy_mobility"
-
-DISTRO_FEATURES:append = " systemd"
-DISTRO_FEATURES:append = " usrmerge"
-VIRTUAL-RUNTIME_init_manager = "systemd"
-DISTRO_FEATURES_BACKFILL_CONSIDERED = "sysvinit"
-VIRTUAL-RUNTIME_initscripts = ""
-DISTRO_FEATURES:remove = " sysvinit"
-
 LICENSE_FLAGS_ACCEPTED = "commercial"
 
+# Path kept from the fslc-xwayland builds so existing units keep their feed
 #Use default (DISTRO_FEED_PREFIX += "remote")
-PACKAGECONFIG:append:pn-opkg = " ssl"
-DISTRO_FEED_URI += "https://hostmobility.org/${DISTRO}/${DISTRO_CODENAME}"
+DISTRO_FEED_URI += "https://hostmobility.org/fslc-xwayland/${DISTRO_CODENAME}"
 DISTRO_FEED_ARCHS += "all ${PACKAGE_EXTRA_ARCHS} ${MACHINE_ARCH}"
 
 ERROR_QA:remove = "version-going-backwards"
 
-# Pin the rootfs ext4 feature set: build WITHOUT the e2fsprogs-1.47 defaults
-# orphan_file and metadata_csum_seed (defense-in-depth, matches Kirkstone's
-# on-disk format). Primary corruption fix is mb_optimize_scan=0 in the hmx
-# fstab. Uses a custom wks (meta-hostmobility-bsp/wic/) since wic ignores
-# EXTRA_IMAGECMD for its internal mkfs.ext4.
-WKS_FILE:imx8mp-var-dart-hmx1 = "hmx-imx-boot-singlepart.wks.in"
-
 DL_DIR ?= "${BSPDIR}/downloads/"
 # meta-imx scarthgap append targets OpenSSL 3.2, but this build uses OpenSSL 3.5.
-BBMASK += ".*/meta-imx.*/recipes-connectivity/openssl/openssl_3\.2\..*\.bbappend"
+BBMASK += ".*/meta-imx-bsp/recipes-connectivity/openssl/openssl_3\.2\.%\.bbappend"
