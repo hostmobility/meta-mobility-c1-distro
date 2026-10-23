@@ -1,4 +1,4 @@
-SUMMARY = "c1 Image"
+SUMMARY = "mobility-c1 Image"
 LICENSE = "MIT"
 PV = "1"
 IMAGE_PREPROCESS_COMMAND = "rootfs_update_timestamp ;"
@@ -17,7 +17,6 @@ TASK_BASIC_SSHDAEMON = "openssh-sshd openssh-sftp openssh-sftp-server openssh-mi
 IMAGE_INSTALL:append = " \
     packagegroup-base \
     packagegroup-hostmobility-can \
-    packagegroup-hostmobility-python \
     packagegroup-hostmobility-base \
     packagegroup-hostmobility-net-minimal \
     packagegroup-c1-base \
@@ -71,7 +70,7 @@ IMAGE_INIT_MANAGER  = "systemd"
 IMAGE_INITSCRIPTS   = " "
 IMAGE_LOGIN_MANAGER = "busybox shadow"
 
-export IMAGE_BASENAME = "c1-image"
+export IMAGE_BASENAME = "mobility-c1-image"
 
 inherit core-image
 
