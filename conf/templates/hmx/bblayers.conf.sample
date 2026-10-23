@@ -38,6 +38,5 @@ BBLAYERS = " \
   ${BSPDIR}/sources/meta-arm/meta-arm-toolchain \
   \
   ${BSPDIR}/sources/meta-hostmobility-bsp \
-  ${BSPDIR}/sources/meta-mobility-poky-distro \
   ${BSPDIR}/sources/meta-mobility-c1-distro  \
 "
