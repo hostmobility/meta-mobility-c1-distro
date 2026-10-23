@@ -35,7 +35,7 @@ RDEPENDS:${PN}-connectivity = " \
 
 RDEPENDS:${PN}-tools = " \
     libgpiod-tools \
-    lmsensors \
+    lmsensors-sensors \
     opkg \
     distro-feed-configs \
     tzdata \
@@ -43,5 +43,5 @@ RDEPENDS:${PN}-tools = " \
     minicom \
     lrzsz \
     htop \
-    libiio \
+    libiio-tests \
 "
