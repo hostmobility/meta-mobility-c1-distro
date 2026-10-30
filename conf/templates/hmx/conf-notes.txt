@@ -1,5 +1,4 @@
-configuration for host monitor x
-Add /mnt/config partition on emmc
-
+Targets:
+    1. mobility-c1-image 'console-based custom linux distribution'
 Machine compatible
     imx8mp-var-dart-hmx1
