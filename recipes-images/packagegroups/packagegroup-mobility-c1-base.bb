@@ -12,7 +12,7 @@ PACKAGES = " \
     ${PN}-tools \
 "
 
-# Everything a production unit needs
+# Everything a unit needs
 RDEPENDS:${PN} = " \
     ${PN}-can \
     ${PN}-connectivity \
