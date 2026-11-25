@@ -1,0 +1,4 @@
+MX4 configuration
+
+Machine compatible
+    mx4-t30
